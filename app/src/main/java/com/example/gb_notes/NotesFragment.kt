@@ -62,7 +62,6 @@ class NotesFragment : Fragment() {
     }
 
     private fun showLandContent(position: Int) {
-        Log.d("Work", "It's work")
         val noteContentFragment: NoteContentFragment? = NoteContentFragment.newInstance(position)
         val fragmentManager = requireActivity().supportFragmentManager
         if (noteContentFragment != null) {

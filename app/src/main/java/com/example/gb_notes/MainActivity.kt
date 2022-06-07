@@ -13,17 +13,22 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, NotesFragment())
+            .replace(R.id.fragment_container, GreetingFragment())
             .commit()
+//
+//        supportFragmentManager
+//            .beginTransaction()
+//            .replace(R.id.fragment_container, NotesFragment())
+//            .commit()
 
-        if (getResources().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            val content : NoteContentFragment? = NoteContentFragment.newInstance(0)
-            if (content != null) {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.note_content, content)
-                    .commit()
-            }
-        }
+//        if (getResources().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            val content : NoteContentFragment? = NoteContentFragment.newInstance(0)
+//            if (content != null) {
+//                supportFragmentManager
+//                    .beginTransaction()
+//                    .replace(R.id.note_content, content)
+//                    .commit()
+//            }
+//        }
     }
 }
