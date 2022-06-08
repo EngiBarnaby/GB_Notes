@@ -1,16 +1,19 @@
 package com.example.gb_notes
 
+import android.content.DialogInterface
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 
 import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 
 import com.google.android.material.navigation.NavigationView
 
@@ -104,7 +107,22 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.action_drawer_exit -> {
-                    finish()
+
+                    AlertDialog
+                        .Builder(this)
+                        .setTitle("Вы действительно хотите выйте?")
+                        .setPositiveButton("Да", DialogInterface.OnClickListener{
+                            dialog, id ->
+                            Toast.makeText(this, "До новых встреч", Toast.LENGTH_SHORT).show();
+                            finish()
+                        })
+                        .setNegativeButton("Нет", DialogInterface.OnClickListener {
+                                dialog, id ->
+                                Toast.makeText(this, "Мы рады, что вы решили остаться", Toast.LENGTH_SHORT).show();
+                                dialog.cancel()
+                        })
+                        .show()
+
                     return@OnNavigationItemSelectedListener true
                 }
             }
