@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GB_Notes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">О приложений</string>
+    <string name="exit">Выход</string>
+    <string name="about_info">Информация о приложение и всё в таком же духе.</string>
+    <string name="drawer_header">Меню</string>
+    <string name="navigation_drawer_open">открыть</string>
+    <string name="navigation_drawer_close">закрыть</string>
 </resources>
