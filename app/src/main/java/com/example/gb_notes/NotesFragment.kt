@@ -2,6 +2,7 @@ package com.example.gb_notes
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,13 +16,13 @@ import android.widget.TextView
 import android.widget.LinearLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
+class NotesFragment : Fragment(), NoteAdapter.Listener {
 
-
-
-class NotesFragment : Fragment() {
-
+    var notes = mutableListOf<Note>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,47 +34,28 @@ class NotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initList(view)
+        val rv : RecyclerView = view.findViewById(R.id.recycle_notes)
+        rv.layoutManager = LinearLayoutManager(activity)
+        rv.adapter = NoteAdapter(initData(), this)
+
     }
 
-    private fun initList(view : View){
-        val layoutView = view as LinearLayout
-        val notes = resources.getStringArray(R.array.noteNames)
-        var index = 0
-        for (note in notes) {
-            val tv = TextView(context)
-            tv.text = note
-            tv.textSize = 30f
-            layoutView.addView(tv)
-            val position = index
-            tv.setOnClickListener{
-                showNotes(position)
-            }
-            index++
+    private fun initData() : List<Note>{
+        for(item in 1..5){
+            val note = Note(title = "Заметка №$item", content = "Содержание заметки №$item")
+            notes.add(note)
         }
+        return notes
     }
 
-    private fun showNotes(position: Int) {
-        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            showLandContent(position)
-        } else {
-            showPortraitContent(position)
-        }
+
+    private fun showNotes(noteContent: String) {
+            showPortraitContent(noteContent)
     }
 
-    private fun showLandContent(position: Int) {
-        val noteContentFragment: NoteContentFragment? = NoteContentFragment.newInstance(position)
-        val fragmentManager = requireActivity().supportFragmentManager
-        if (noteContentFragment != null) {
-            fragmentManager.beginTransaction()
-                .replace(R.id.note_content, noteContentFragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit()
-        }
-    }
 
-    private fun showPortraitContent(position: Int) {
-        val noteContentFragment: NoteContentFragment? = NoteContentFragment.newInstance(position)
+    private fun showPortraitContent(noteContent: String) {
+        val noteContentFragment: NoteContentFragment? = NoteContentFragment.newInstance(noteContent)
         val fragmentManager = requireActivity().supportFragmentManager
         if (noteContentFragment != null) {
             fragmentManager.beginTransaction()
@@ -84,20 +66,8 @@ class NotesFragment : Fragment() {
         }
     }
 
-//
-//    private fun showNoteContent(position: Int) {
-//        val stringArray = getResources().getStringArray(R.array.noteContent)
-//        val content = stringArray[position]
-//        val bundle = Bundle()
-//        bundle.putString("content", content)
-//        val fragment = NoteContentFragment()
-//        fragment.arguments = bundle
-//        fragmentManager?.beginTransaction()
-//            ?.addToBackStack(null)
-//            ?.replace(R.id.fragment_container, fragment)
-//            ?.commit()
-//
-//    }
-
+    override fun onClick(note: Note) {
+        showNotes(note.content)
+    }
 
 }

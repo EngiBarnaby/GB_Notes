@@ -27,10 +27,10 @@ class NoteContentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val args = this.arguments
         val inputData = args?.get("content")
-        val stringArray = getResources().getStringArray(R.array.noteContent)
-        val content = stringArray[inputData as Int]
+//        val stringArray = getResources().getStringArray(R.array.noteContent)
+//        val content = stringArray[inputData as Int]
         val tv : TextView = view.findViewById(R.id.contentTV)
-        tv.text = content.toString()
+        tv.text = inputData.toString()
     }
 
 
@@ -38,10 +38,10 @@ class NoteContentFragment : Fragment() {
     companion object {
 
 
-        fun newInstance(index: Int): NoteContentFragment? {
+        fun newInstance(noteContent: String): NoteContentFragment? {
             val fragment = NoteContentFragment()
             val args = Bundle()
-            args.putInt("content", index)
+            args.putString("content", noteContent)
             fragment.setArguments(args)
             return fragment
         }
